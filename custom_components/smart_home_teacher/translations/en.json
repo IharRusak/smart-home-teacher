@@ -1,0 +1,11 @@
+{
+  "title": "Smart Home Teacher",
+  "config": {
+    "step": {
+      "import": {
+        "title": "Set up Smart Home Teacher",
+        "description": "Set up the local Home Assistant voice assistant powered by Ollama."
+      }
+    }
+  }
+}

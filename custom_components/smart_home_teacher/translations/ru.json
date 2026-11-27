@@ -1,0 +1,11 @@
+{
+  "title": "Учитель умного дома",
+  "config": {
+    "step": {
+      "import": {
+        "title": "Настройка Smart Home Teacher",
+        "description": "Настройка локального голосового помощника Home Assistant на базе Ollama."
+      }
+    }
+  }
+}

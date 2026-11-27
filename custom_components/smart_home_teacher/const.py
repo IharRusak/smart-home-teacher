@@ -1,0 +1,6 @@
+"""Constants for Smart Home Teacher."""
+DOMAIN = "$DOMAIN"
+OLLAMA_URL = "http://127.0.0.1:11434"
+OLLAMA_MODEL = "qwen3:4b-instruct"
+CUSTOM_SENTENCE_FILENAME = "smart_home_teacher_learned.yaml"
+CUSTOM_ACTIONS_DIRECTORY = "smart_home_teacher"
