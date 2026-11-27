@@ -28,7 +28,7 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
 
 
 async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
-    """Set up the conversation agent and previously learned custom phrases."""
+    """Set up the conversation agent and load saved phrase mappings."""
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     try:
         await async_setup_custom_actions(hass, entry)
@@ -40,7 +40,7 @@ async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
 
 
 async def async_unload_entry(hass: HomeAssistant, entry) -> bool:
-    """Unload the agent and unregister its learned custom intent handlers."""
+    """Unload the agent and remove legacy learned intent handlers."""
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         await async_unload_custom_actions(hass, entry)

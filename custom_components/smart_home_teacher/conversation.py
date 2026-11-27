@@ -268,7 +268,7 @@ The request language is {language!r}. Interpret the utterance grammatically and 
 
 Home Assistant Assist normally attempts its built-in local intent recognition before this fallback agent is called when 'Prefer handling commands locally' is enabled. Do not recreate Home Assistant's language grammar, do not use a hard-coded list of action verbs, and do not guess how Home Assistant parses a sentence. Your task is only to classify a fallback utterance for safe future learning.
 
-The background worker must NEVER execute, start, stop, turn on, turn off, or otherwise change any device or script. It may only save one of: an entity alias, a custom sentence mapped to an exposed script, or nothing.
+Smart Home Teacher must NEVER execute, start, stop, turn on, turn off, or otherwise change any device or script. It may only save one of: an entity alias, a phrase-to-script mapping record, or nothing.
 
 Choose exactly one result:
 

@@ -8,6 +8,17 @@ bash scripts/validate.sh
 
 The script compiles every Python module and parses all JSON files. It does not require HA or Ollama.
 
+## End-to-end tests
+
+Install the test dependencies and run the Home Assistant integration tests:
+
+```bash
+python -m pip install -r requirements_test.txt
+python -m pytest -q
+```
+
+The E2E tests use a real Home Assistant test instance. They verify phrase validation and persistence while intercepting script service calls so no script can run.
+
 ## Runtime verification
 
 For a full integration test, use a test Home Assistant instance and a reachable Ollama instance. Validate at least:
@@ -19,9 +30,9 @@ For a full integration test, use a test Home Assistant instance and a reachable 
 5. `entity_alias` accepts only a literal phrase fragment and an exposed non-script entity.
 6. Duplicate aliases and aliases owned by another exposed entity are rejected.
 7. `custom_phrase` accepts only an exposed `script.*` entity.
-8. A custom phrase is persisted, registered, and restored after HA restart.
-9. A custom phrase does not run the script during learning; it runs only on a later matching Assist turn.
-10. Missing or no-longer-exposed scripts are rejected at execution time.
+8. A custom phrase mapping is persisted and restored after HA restart, but is not registered as an Assist intent.
+9. Learning a custom phrase never registers or runs a script; no device service is called by the integration.
+10. Legacy generated custom-sentence files and handlers are removed during setup/unload.
 11. `ignore` does not mutate HA state or execute services.
 
 ## Logs

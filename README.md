@@ -15,11 +15,11 @@ Custom integration for Home Assistant that uses a local Ollama model to learn en
 3. The worker sends the utterance, recent chat context, language and exposed-entity metadata to Ollama.
 4. The model may return one of three classifications:
    - `entity_alias` — add a literal fragment from the utterance as an alias to one exposed device entity;
-   - `custom_phrase` — save the exact utterance as a sentence mapped to one exposed `script.*` entity;
+   - `custom_phrase` — save the exact utterance as an inert mapping to one exposed `script.*` entity;
    - `ignore` — make no change.
-5. The background learning worker does **not** execute device actions. A learned custom phrase can run its mapped script only on a later Assist turn, after the script's existence and Assist exposure are checked again.
+5. Smart Home Teacher never executes scripts or device actions. Learned phrase mappings are stored for reference only; the integration does not register them as executable Assist sentences.
 
-Entity aliases are stored in Home Assistant's Entity Registry. Learned custom phrase mappings are stored in `/config/smart_home_teacher/custom_actions.json`; generated Assist sentences are stored under `/config/custom_sentences/<language>/`.
+Entity aliases are stored in Home Assistant's Entity Registry. Learned custom phrase mappings are stored in `/config/smart_home_teacher/custom_actions.json`.
 
 ## Installation
 
@@ -66,8 +66,8 @@ These values are currently constants in `custom_components/smart_home_teacher/co
 - Alias text must be a short literal fragment of the latest utterance. Duplicate aliases and aliases already owned by another exposed entity are rejected.
 - Alias targets cannot be `script.*`; custom phrase targets must be exposed `script.*` entities.
 - The integration does not currently have a semantic confidence threshold or a deterministic device-type compatibility check for an alias. A wrong model-to-entity association is therefore possible even though the alias is a literal fragment. Review the Entity Registry after learning events.
-- The fallback acknowledgement is not confirmation that a device action was executed.
-- Learned custom phrases are exact Assist sentences; they are not general natural-language action plans.
+- Smart Home Teacher does not execute scripts, call device services, or register learned phrases as executable intents.
+- A learned custom phrase mapping is only a record; it does not make the phrase trigger its mapped script.
 - The supplied installer performed host-level cleanup and restart operations. It is intentionally **not included as an auto-run installation path** in this repository; use the standard custom-integration installation above.
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/INSTALLATION.md](docs/INSTALLATION.md), and [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).

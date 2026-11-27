@@ -9,7 +9,7 @@
 | `config_flow.py` | Import-based Config Entry creation |
 | `__init__.py` | Integration lifecycle and Conversation platform setup |
 | `conversation.py` | Assist conversation agent, FIFO learning queue, entity discovery, Ollama classification and alias validation |
-| `custom_actions.py` | Persistence and registration of learned phrase → script mappings |
+| `custom_actions.py` | Persistence of learned phrase → script mappings; no execution |
 | `translations/*.json` | English and Russian setup translations |
 
 ## Request flow
@@ -26,18 +26,14 @@ flowchart TD
     H --> I{Classification}
     I -->|entity_alias| J[Validate literal alias and entity]
     J --> K[Update Entity Registry]
-    I -->|custom_phrase| L[Validate exposed script and phrase]
-    L --> M[Persist JSON + generate Assist sentence]
-    M --> N[Register intent handler and reload affected language]
+    I -->|custom_phrase| L[Validate phrase and exposed script]
+    L --> M[Persist phrase-to-script mapping only]
     I -->|ignore| O[No change]
-    N --> P[Later Assist turn matches learned sentence]
-    P --> Q[Recheck script exists and is exposed]
-    Q --> R[Run script]
 ```
 
 ## Safety boundary
 
-The queue worker is training-only. It can write an entity alias or a custom sentence mapping; it does not call device services. The custom intent handler is a separate execution path: it is invoked only by a later local Assist match and calls `script.turn_on` for the mapped script after checking that the entity still exists and remains exposed to Assist.
+Smart Home Teacher is training-only: it can update an entity alias or save a phrase-to-script record, but it never registers learned intents, generates executable Assist sentences, or calls device services. Learned phrase mappings are inert records; any later script execution must come from Home Assistant's own native handling, not this integration.
 
 The model receives entity identifiers, domains, names and aliases for exposed entities. It does not receive device state from the entity discovery function. The candidate list is capped at 64 entries and sorted by lexical overlap with the request.
 

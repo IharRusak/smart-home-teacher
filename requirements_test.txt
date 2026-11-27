@@ -1,0 +1,4 @@
+hassil==1.6.1
+home-assistant-intents==2024.3.12
+pytest-homeassistant-custom-component==0.13.109
+tzdata
