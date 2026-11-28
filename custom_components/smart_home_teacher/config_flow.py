@@ -16,8 +16,15 @@ class SmartHomeTeacherConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
 
+    async def async_step_user(self, user_input: dict | None = None):
+        """Create the entry from the UI."""
+        return await self._async_create_entry()
+
     async def async_step_import(self, user_input: dict | None = None):
         """Create the entry from YAML configuration."""
+        return await self._async_create_entry()
+
+    async def _async_create_entry(self):
         await self.async_set_unique_id(DOMAIN)
         self._abort_if_unique_id_configured()
         title = _display_name(self.hass.config.language)

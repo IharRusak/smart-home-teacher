@@ -1,0 +1,40 @@
+cleanup_learning_result:
+  name: Clean up a learning result
+  description: >
+    Remove one exact alias or custom phrase reported by a learning-result
+    event. This does not execute a script or device action.
+  fields:
+    request_id:
+      name: Request ID
+      description: Request ID from the learning-result event.
+      required: true
+      selector:
+        text:
+    result_type:
+      name: Result type
+      description: Alias or custom phrase result type from the event.
+      required: true
+      selector:
+        select:
+          options:
+            - custom_phrase
+            - entity_alias
+            - area_alias
+    target_id:
+      name: Target ID
+      description: Target ID from the learning-result event.
+      required: true
+      selector:
+        text:
+    value:
+      name: Alias or phrase
+      description: Exact alias or phrase from the learning-result event.
+      required: true
+      selector:
+        text:
+    language:
+      name: Language
+      description: Language from the learning-result event.
+      required: true
+      selector:
+        text:
